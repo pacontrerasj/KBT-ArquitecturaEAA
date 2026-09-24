@@ -1,0 +1,311 @@
+<mxfile host="app.diagrams.net" modified="2025-09-24T12:00:00.000Z" agent="Mozilla/5.0" etag="ABC123" version="21.0" type="device">
+  <diagram id="arquitectura-eks" name="Page-1">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ========== TITULO ========== -->
+        <mxCell id="titulo" value="AWS EKS Architecture - TO-BE Design (Multi-AZ)" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="10" width="1300" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== VPC CONTAINER ========== -->
+        <mxCell id="vpc" value="VPC: 10.0.0.0/16" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;strokeColor=#FF9900;dashed=1;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="1320" height="900" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== INTERNET GATEWAY ========== -->
+        <mxCell id="internet" value="Internet" style="text;html=1;fontSize=11;align=center;fontStyle=1;strokeColor=#FF9900;" vertex="1" parent="1">
+          <mxGeometry x="20" y="150" width="60" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AZ1a LABEL ========== -->
+        <mxCell id="az1a-label" value="Availability Zone 1a (us-east-1a)" style="text;html=1;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacingTop=5;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="70" width="300" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AZ1a CONTAINER ========== -->
+        <mxCell id="az1a" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#0066CC;dashed=1;fontSize=11;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="570" height="800" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PUBLIC SUBNET 1a ========== -->
+        <mxCell id="public-subnet-1a" value="Public Subnet 1a: 10.0.1.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#0288D1;fontSize=11;fillColor=#E1F5FE;" vertex="1" parent="1">
+          <mxGeometry x="80" y="120" width="530" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- IGW en 1a -->
+        <mxCell id="igw-1a" value="🌐 IGW" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- NAT Gateway en 1a -->
+        <mxCell id="nat-1a" value="NAT GW" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ALB en 1a -->
+        <mxCell id="alb-1a" value="🔷 ALB" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Route53/Load Balancer label -->
+        <mxCell id="lb-label" value="Ingress" style="text;html=1;fontSize=9;align=center;" vertex="1" parent="1">
+          <mxGeometry x="420" y="135" width="80" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PRIVATE APP SUBNET 1a ========== -->
+        <mxCell id="private-app-1a" value="Private APP Subnet 1a: 10.0.2.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#2E7D32;fontSize=11;fillColor=#E8F5E9;" vertex="1" parent="1">
+          <mxGeometry x="80" y="230" width="530" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS Node 1 -->
+        <mxCell id="eks-node-1" value="EKS Node 1&#10;t3.medium" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="250" width="80" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Pod 1 - Frontend -->
+        <mxCell id="pod1-frontend" value="🐳&#10;frontend&#10;:3000" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#4FC3F7;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="200" y="250" width="70" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Pod 2 - get-products -->
+        <mxCell id="pod2-getprod" value="🐳&#10;get-prod&#10;:3001" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#4FC3F7;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="290" y="250" width="70" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Pod 3 - create-product -->
+        <mxCell id="pod3-create" value="🐳&#10;create&#10;:3002" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#4FC3F7;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="380" y="250" width="70" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- HPA Badge -->
+        <mxCell id="hpa-badge-1a" value="📈 HPA&#10;Min 2/Max 5&#10;CPU 70%" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#66BB6A;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="250" width="120" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PRIVATE DATA SUBNET 1a ========== -->
+        <mxCell id="private-data-1a" value="Private DATA Subnet 1a: 10.0.3.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#6A1B9A;fontSize=11;fillColor=#F3E5F5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="390" width="530" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- RDS Primary -->
+        <mxCell id="rds-primary" value="🗄️ RDS Primary&#10;MySQL 8.0&#10;Master (AZ1a)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#527FFF;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="405" width="110" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch -->
+        <mxCell id="cloudwatch-1a" value="📊 CloudWatch&#10;Container&#10;Insights" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#FFA726;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="405" width="110" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Security Group Badge 1a -->
+        <mxCell id="sg-badge-1a" value="🔒 Security Groups (1a)&#10;SG-ALB: 80/443&#10;SG-EKS: Pod traffic&#10;SG-RDS: 3306" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;align=center;fillColor=#FFCCBC;fontColor=#D84315;strokeWidth=2;strokeColor=#D84315;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="500" width="530" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AZ1b LABEL ========== -->
+        <mxCell id="az1b-label" value="Availability Zone 1b (us-east-1b)" style="text;html=1;fontSize=13;fontStyle=1;align=left;verticalAlign=top;spacingTop=5;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="660" y="70" width="300" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== AZ1b CONTAINER ========== -->
+        <mxCell id="az1b" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#0066CC;dashed=1;fontSize=11;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="660" y="100" width="570" height="800" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PUBLIC SUBNET 1b ========== -->
+        <mxCell id="public-subnet-1b" value="Public Subnet 1b: 10.0.4.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#0288D1;fontSize=11;fillColor=#E1F5FE;" vertex="1" parent="1">
+          <mxGeometry x="680" y="120" width="530" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- IGW en 1b -->
+        <mxCell id="igw-1b" value="🌐 IGW" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- NAT Gateway en 1b -->
+        <mxCell id="nat-1b" value="NAT GW" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ALB en 1b -->
+        <mxCell id="alb-1b" value="🔷 ALB" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor:#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="135" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PRIVATE APP SUBNET 1b ========== -->
+        <mxCell id="private-app-1b" value="Private APP Subnet 1b: 10.0.5.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#2E7D32;fontSize=11;fillColor=#E8F5E9;" vertex="1" parent="1">
+          <mxGeometry x="680" y="230" width="530" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS Node 2 -->
+        <mxCell id="eks-node-2" value="EKS Node 2&#10;t3.medium" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="250" width="80" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Pod 4 - update-product -->
+        <mxCell id="pod4-update" value="🐳&#10;update&#10;:3003" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#4FC3F7;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="800" y="250" width="70" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- Pod 5 - delete-product -->
+        <mxCell id="pod5-delete" value="🐳&#10;delete&#10;:3004" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#4FC3F7;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="890" y="250" width="70" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- HPA Badge 1b -->
+        <mxCell id="hpa-badge-1b" value="📈 HPA&#10;Min 2/Max 5&#10;CPU 70%" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor:#66BB6A;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="250" width="120" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== PRIVATE DATA SUBNET 1b ========== -->
+        <mxCell id="private-data-1b" value="Private DATA Subnet 1b: 10.0.6.0/24" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;strokeColor=#6A1B9A;fontSize=11;fillColor=#F3E5F5;" vertex="1" parent="1">
+          <mxGeometry x="680" y="390" width="530" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- RDS Standby -->
+        <mxCell id="rds-standby" value="🗄️ RDS Standby&#10;MySQL Replica&#10;Failover (AZ1b)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor:#527FFF;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="405" width="110" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- ECR -->
+        <mxCell id="ecr-1b" value="📦 ECR&#10;Docker Images&#10;(5 Repos)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#FF9900;fontColor=#ffffff;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="910" y="405" width="110" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Security Group Badge 1b -->
+        <mxCell id="sg-badge-1b" value="🔒 Security Groups (1b)&#10;SG-ALB: 80/443&#10;SG-EKS: Pod traffic&#10;SG-RDS: 3306" style="rounded=1;whiteSpace=wrap;html=1;fontSize=8;align=center;fillColor=#FFCCBC;fontColor=#D84315;strokeWidth=2;strokeColor=#D84315;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="500" width="530" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== EKS CONTROL PLANE ========== -->
+        <mxCell id="control-plane" value="☸️ EKS Control Plane (Managed)&#10;API Server • Scheduler • Controller Manager • etcd&#10;Multi-AZ, Auto-managed by AWS" style="rounded=1;whiteSpace=wrap;html=1;fontSize=10;align=center;fontStyle=1;fillColor=#BBDEFB;strokeWidth=3;strokeColor=#1565C0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="590" width="900" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== SHARED SERVICES ROW ========== -->
+        <!-- ECR -->
+        <mxCell id="ecr" value="📦&#10;Amazon ECR&#10;Container Registry&#10;(5 Repos)" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#F3E5F5;strokeWidth=2;strokeColor=#6A1B9A;" vertex="1" parent="1">
+          <mxGeometry x="80" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Security Groups -->
+        <mxCell id="sg" value="🔒&#10;Security Groups&#10;SG-ALB&#10;SG-EKS&#10;SG-RDS" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#FFEBEE;strokeWidth=2;strokeColor=#D32F2F;" vertex="1" parent="1">
+          <mxGeometry x="280" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Container Insights -->
+        <mxCell id="cloudwatch" value="📊&#10;CloudWatch&#10;Container Insights&#10;Monitoring & Logs" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#C8E6C9;strokeWidth=2;strokeColor=#2E7D32;" vertex="1" parent="1">
+          <mxGeometry x="480" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- RDS Multi-AZ -->
+        <mxCell id="rds-info" value="🗄️&#10;RDS MySQL Multi-AZ&#10;Primary: AZ1a&#10;Standby: AZ1b" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#E8EAF6;strokeWidth=2;strokeColor=#3F51B5;" vertex="1" parent="1">
+          <mxGeometry x="680" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- NAT Gateway & IGW -->
+        <mxCell id="nat-igw" value="🌐&#10;NAT Gateway&#10;Internet Gateway&#10;Outbound/Inbound" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#FFF9C4;strokeWidth=2;strokeColor=#F57F17;" vertex="1" parent="1">
+          <mxGeometry x="880" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Node Group Multi-AZ -->
+        <mxCell id="node-group" value="🖥️&#10;EKS Node Group&#10;Multi-AZ&#10;2-4 Nodes" style="rounded=1;whiteSpace=wrap;html=1;fontSize=9;align=center;fillColor=#E0F2F1;strokeWidth=2;strokeColor=#00796B;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="700" width="150" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== CONNECTORS / ARROWS ========== -->
+        <!-- Internet to ALB 1a -->
+        <mxCell id="conn1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FF9900;" edge="1" parent="1" source="internet" target="alb-1a">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Internet to ALB 1b -->
+        <mxCell id="conn2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FF9900;" edge="1" parent="1" source="internet" target="alb-1b">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ALB to Pods 1a -->
+        <mxCell id="conn3" value="Traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#FF9900;fontSize=8;" edge="1" parent="1" source="alb-1a" target="pod1-frontend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ALB to Pods 1b -->
+        <mxCell id="conn4" value="Traffic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#FF9900;fontSize=8;" edge="1" parent="1" source="alb-1b" target="pod4-update">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS Node 1 to RDS Primary -->
+        <mxCell id="conn5" value="Database" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#527FFF;fontSize=8;" edge="1" parent="1" source="eks-node-1" target="rds-primary">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS Node 2 to RDS Standby -->
+        <mxCell id="conn6" value="Database" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#527FFF;fontSize=8;" edge="1" parent="1" source="eks-node-2" target="rds-standby">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- RDS Replication -->
+        <mxCell id="conn7" value="Multi-AZ Sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=3;strokeColor=#C2185B;fontSize=8;fontStyle=1;" edge="1" parent="1" source="rds-primary" target="rds-standby">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Pods to ECR (Pull Images) -->
+        <mxCell id="conn8" value="Pull Images" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#FF9900;dashed=1;fontSize=8;" edge="1" parent="1" source="pod1-frontend" target="ecr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Pods to CloudWatch (Metrics) -->
+        <mxCell id="conn9" value="Metrics/Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#FFA726;dashed=1;fontSize=8;" edge="1" parent="1" source="pod2-getprod" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Nodes to Control Plane -->
+        <mxCell id="conn10" value="Management" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#1565C0;dashed=1;fontSize=8;" edge="1" parent="1" source="eks-node-1" target="control-plane">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ========== LEGEND ========== -->
+        <mxCell id="legend" value="LEYENDA:" style="text;html=1;fontSize=11;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="60" y="830" width="100" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend1" value="═══ Tráfico de red activo (aplicación)" style="text;html=1;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="60" y="850" width="300" height="15" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend2" value="- - - Tráfico de management/datos" style="text;html=1;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="60" y="865" width="300" height="15" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend3" value="🔒 Componentes protegidos por Security Groups" style="text;html=1;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="400" y="850" width="350" height="15" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="legend4" value="📈 HPA: Escala automática (Min 2 - Max 5 replicas)" style="text;html=1;fontSize=9;align=left;" vertex="1" parent="1">
+          <mxGeometry x="400" y="865" width="350" height="15" as="geometry"/>
+        </mxCell>
+
+        <!-- Key Features -->
+        <mxCell id="features" value="CARACTERÍSTICAS CLAVE:" style="text;html=1;fontSize=11;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="850" y="830" width="200" height="20" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="feat1" value="✓ Multi-AZ (2 availability zones)" style="text;html=1;fontSize=8;align=left;" vertex="1" parent="1">
+          <mxGeometry x="850" y="850" width="280" height="12" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="feat2" value="✓ RDS MySQL Multi-AZ con failover automático" style="text;html=1;fontSize=8;align=left;" vertex="1" parent="1">
+          <mxGeometry x="850" y="862" width="280" height="12" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="feat3" value="✓ HPA con CPU target 70% (2-5 replicas)" style="text;html=1;fontSize=8;align=left;" vertex="1" parent="1">
+          <mxGeometry x="850" y="874" width="280" height="12" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
