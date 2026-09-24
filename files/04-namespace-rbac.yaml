@@ -1,0 +1,130 @@
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: escolaronline
+  labels:
+    app: escolaronline
+    environment: production
+
+---
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: get-products
+  namespace: escolaronline
+  labels:
+    app: get-products
+    version: v1
+
+---
+# Role for get-products
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: get-products
+  namespace: escolaronline
+  labels:
+    app: get-products
+rules:
+# Allow reading own configmaps and secrets
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  resourceNames: ["mysql-config", "mysql-credentials"]
+  verbs: ["get"]
+
+# Allow reading own pod information
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+
+# Allow access to logs
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get"]
+
+---
+# RoleBinding for get-products
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: get-products
+  namespace: escolaronline
+  labels:
+    app: get-products
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: get-products
+subjects:
+- kind: ServiceAccount
+  name: get-products
+  namespace: escolaronline
+
+---
+# NetworkPolicy for get-products
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: get-products-netpol
+  namespace: escolaronline
+  labels:
+    app: get-products
+spec:
+  podSelector:
+    matchLabels:
+      app: get-products
+  
+  policyTypes:
+  - Ingress
+  - Egress
+  
+  ingress:
+  # Allow traffic from ALB Ingress Controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system
+    ports:
+    - protocol: TCP
+      port: 3001
+  
+  # Allow traffic from other pods in the namespace
+  - from:
+    - podSelector:
+        matchLabels:
+          tier: backend
+    ports:
+    - protocol: TCP
+      port: 3001
+  
+  egress:
+  # Allow DNS queries
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow outbound to RDS MySQL
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 3306
+  
+  # Allow outbound to ECR (HTTPS)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
+  
+  # Allow outbound to CloudWatch Logs (HTTPS)
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: TCP
+      port: 443
